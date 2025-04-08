@@ -11,6 +11,11 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -31,6 +36,7 @@ fun ProductDetailsScreen(
 ) {
     val product = viewModel.products.find { it.id == productId }
     product?.let {
+        var quantity by remember { mutableIntStateOf(it.quantity) }
         Column(
             modifier = Modifier.padding(horizontal = 16.dp),
         ) {
@@ -48,13 +54,19 @@ fun ProductDetailsScreen(
             Text("Price: ${it.price}$")
             Text("Size: ${it.size} MB")
             Text("About: ${it.about}")
-            Text("Stock: ${it.quantity}")
+            Text("Stock: $quantity")
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { if (it.quantity > 1) it.quantity-- }) {
+                IconButton(onClick = {
+                    if (quantity > 1) {
+                        quantity--
+                        viewModel.updateQuantity(it.id, quantity)
+                    } }) {
                     Text("-")
                 }
-                Text(text = it.quantity.toString())
-                IconButton(onClick = { it.quantity++ }) {
+                Text(text = quantity.toString())
+                IconButton(onClick = {
+                    quantity++
+                    viewModel.updateQuantity(it.id, quantity)}) {
                     Text("+")
                 }
             }
@@ -67,7 +79,10 @@ fun ProductDetailsScreen(
                     Text("Delete")
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Button(onClick = { navController.popBackStack() }) {
+                Button(onClick = {
+                    navController.popBackStack()
+                    viewModel.fetchProducts()
+                }) {
                     Text("Back to List")
                 }
             }

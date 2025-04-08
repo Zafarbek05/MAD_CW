@@ -20,6 +20,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -45,6 +49,7 @@ fun ProductCard(
             .clickable { onProductClick() },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
+        var quantity by remember { mutableIntStateOf(product.quantity) }
         Column(modifier = Modifier.padding(16.dp)) {
             Image(
                 painter = rememberAsyncImagePainter(model = product.logoUrl),
@@ -58,7 +63,7 @@ fun ProductCard(
 
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = {
-                    if (product.quantity > 1)
+                    if (quantity > 1)
                         onQuantityChange(product.quantity--)
                 }) { Text("-") }
                 Text(product.quantity.toString())
@@ -102,8 +107,7 @@ fun ProductListScreen(
                     navController.navigate(Screen.UpdateProduct.createRoute(item.id))
                 },
                 onQuantityChange = { quantity ->
-                    val updatedProduct = item.copy(quantity = quantity)
-                    products[index] = updatedProduct
+                    viewModel.updateQuantity(item.id, quantity)
                 })
         })
     }

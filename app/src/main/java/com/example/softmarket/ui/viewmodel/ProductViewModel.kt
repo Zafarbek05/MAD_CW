@@ -66,4 +66,19 @@ class ProductViewModel : ViewModel() {
             }
         }
     }
+
+    fun updateQuantity(productId: Int, newQuantity: Int){
+        viewModelScope.launch {
+            try {
+                val product = products.find { it.id == productId }
+                product?.let {
+                    val updatedProduct = it.copy(quantity = newQuantity)
+                    repository.updateProduct(productId, updatedProduct)
+                    toast.value = "Stock: $newQuantity"
+                }
+            } catch (e: Exception){
+                toast.value = "Error updating stock: ${e.message}"
+            }
+        }
+    }
 }
