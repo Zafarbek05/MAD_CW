@@ -2,6 +2,7 @@ package com.example.softmarket.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -49,35 +50,43 @@ fun ProductCard(
             .clickable { onProductClick() },
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        var quantity by remember { mutableIntStateOf(product.quantity) }
-        Column(modifier = Modifier.padding(16.dp)) {
+        val quantity by remember { mutableIntStateOf(product.quantity) }
+        Row (
+            modifier = Modifier.padding(16.dp).fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
                 painter = rememberAsyncImagePainter(model = product.logoUrl),
                 contentDescription = "Logo",
                 modifier = Modifier.size(80.dp),
                 contentScale = ContentScale.Crop
             )
-            Text("Title: ${product.title}")
-            Text("Provider: ${product.provider}")
-            Text("Price: ${product.price}")
-
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = {
-                    if (quantity > 1)
-                        onQuantityChange(product.quantity--)
-                }) { Text("-") }
-                Text(product.quantity.toString())
-                IconButton(onClick = {
-                    onQuantityChange(product.quantity++)
-                }) { Text("+") }
+            Column {
+                Text("Title: ${product.title}")
+                Text("Provider: ${product.provider}")
+                Text("Price: ${product.price}")
             }
 
-            Row {
-                IconButton(onClick = onDeleteClick) {
-                    Icon(Icons.Filled.Delete, contentDescription = "Delete")
+            Column {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    IconButton(onClick = {
+                        if (quantity > 1)
+                            onQuantityChange(product.quantity--)
+                    }) { Text("-") }
+                    Text(product.quantity.toString())
+                    IconButton(onClick = {
+                        onQuantityChange(product.quantity++)
+                    }) { Text("+") }
                 }
-                IconButton(onClick = onUpdateClick) {
-                    Icon(Icons.Filled.Edit, contentDescription = "Update")
+
+                Row {
+                    IconButton(onClick = onDeleteClick) {
+                        Icon(Icons.Filled.Delete, contentDescription = "Delete")
+                    }
+                    IconButton(onClick = onUpdateClick) {
+                        Icon(Icons.Filled.Edit, contentDescription = "Update")
+                    }
                 }
             }
         }
