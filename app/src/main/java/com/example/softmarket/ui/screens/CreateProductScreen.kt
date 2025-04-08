@@ -24,6 +24,7 @@ import com.example.softmarket.data.remote.ProductRequest
 import com.example.softmarket.data.setBilling
 import com.example.softmarket.data.setCategory
 import com.example.softmarket.data.setPlatform
+import com.example.softmarket.ui.components.MyDropBox
 import com.example.softmarket.ui.components.MyTextField
 import com.example.softmarket.ui.viewmodel.ProductViewModel
 
@@ -41,6 +42,11 @@ fun CreateProductScreen(navController: NavController, viewModel: ProductViewMode
     var quantity by remember { mutableStateOf(TextFieldValue("")) }
     val scrollState = rememberScrollState()
 
+    // dropdown options
+    val categories = listOf("Engineering", "Productivity", "Graphics", "Other")
+    val platforms = listOf("Windows", "macOS", "Linux", "Other")
+    val billings = listOf("Monthly", "Annually", "Other")
+
     Column(
         modifier = Modifier
             .padding(paddingValues)
@@ -49,9 +55,26 @@ fun CreateProductScreen(navController: NavController, viewModel: ProductViewMode
     ) {
         MyTextField(value = title, onValueChange = { title = it }, label = { Text("Title") })
         MyTextField(value = provider, onValueChange = { provider = it }, label = { Text("Provider") })
-        MyTextField(value = category, onValueChange = { category = it }, label = { Text("Category") })
-        MyTextField(value = targetPlatforms, onValueChange = { targetPlatforms = it }, label = { Text("Target Platforms") })
-        MyTextField(value = billing, onValueChange = { billing = it }, label = { Text("Billing") })
+        MyDropBox(
+            label = "Category",
+            options = categories,
+            selected = category.text,
+            onValueChange = { category = TextFieldValue(it) }
+        )
+
+        MyDropBox(
+            label = "Target Platforms",
+            options = platforms,
+            selected = targetPlatforms.text,
+            onValueChange = { targetPlatforms = TextFieldValue(it) }
+        )
+
+        MyDropBox(
+            label = "Billing",
+            options = billings,
+            selected = billing.text,
+            onValueChange = { billing = TextFieldValue(it) }
+        )
         MyTextField(value = price, onValueChange = { price = it }, label = { Text("Price") })
         MyTextField(value = logoUrl, onValueChange = { logoUrl = it }, label = { Text("Logo URL") })
         MyTextField(value = size, onValueChange = { size = it }, label = { Text("Size") })
