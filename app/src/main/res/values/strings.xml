@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">Softmarket</string>
+    <string name="create">Create</string>
+    <string name="update">Update</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="back_to_list">Back to list</string>
+    <string name="delete_confirmation">Are you sure you want to delete %1$s?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="product_not_found">Product not found!</string>
+    <string name="title">Title: %1$s</string>
+    <string name="provider">Provider: %1$s</string>
+    <string name="category">Category: %1$s</string>
+    <string name="target_platforms">Platforms: %1$s</string>
+    <string name="billing">Billing: %1$s</string>
+    <string name="price">Price: %1$s</string>
+    <string name="logo_url">Logo URL: %1$s</string>
+    <string name="size">Size: %1$s MB</string>
+    <string name="about_product">About: %1$s</string>
+    <string name="quantity">Stock: %1$s</string>
 </resources>

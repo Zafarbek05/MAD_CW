@@ -24,13 +24,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.softmarket.R
 import com.example.softmarket.data.Product
 import com.example.softmarket.ui.navigation.Screen
 import com.example.softmarket.ui.viewmodel.ProductViewModel
@@ -63,9 +64,9 @@ fun ProductCard(
                 contentScale = ContentScale.Crop
             )
             Column {
-                Text("Title: ${product.title}")
-                Text("Provider: ${product.provider}")
-                Text("Price: ${product.price}")
+                Text(stringResource(R.string.title, product.title))
+                Text(stringResource(R.string.provider, product.provider))
+                Text(stringResource(R.string.price, product.price))
             }
 
             Column {

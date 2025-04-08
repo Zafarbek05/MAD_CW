@@ -19,12 +19,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.softmarket.R
 import com.example.softmarket.data.getBilling
 import com.example.softmarket.data.getCategory
 import com.example.softmarket.data.getPlatform
+import com.example.softmarket.data.setCategory
 import com.example.softmarket.ui.navigation.Screen
 import com.example.softmarket.ui.viewmodel.ProductViewModel
 
@@ -46,15 +49,16 @@ fun ProductDetailsScreen(
                 modifier = Modifier.size(120.dp).padding(16.dp),
                 contentScale = ContentScale.Crop
             )
-            Text("Title: ${it.title}")
-            Text("Provider: ${it.provider}")
-            Text("Category: ${getCategory(it.category)}")
-            Text("Target Platform: ${getPlatform(it.targetPlatforms)}")
-            Text("Billing: ${getBilling(it.billing)}")
-            Text("Price: ${it.price}$")
-            Text("Size: ${it.size} MB")
-            Text("About: ${it.about}")
-            Text("Stock: $quantity")
+            Text(stringResource(R.string.title, it.title))
+            Text(stringResource(R.string.provider, it.provider))
+            Text(stringResource(R.string.category, getCategory(it.category)))
+            Text(stringResource(R.string.target_platforms, getPlatform(it.targetPlatforms)))
+            Text(stringResource(R.string.billing, getBilling(it.billing)))
+            Text(stringResource(R.string.price, it.price))
+            Text(stringResource(R.string.size, it.size))
+            Text(stringResource(R.string.about_product, it.about))
+            Text(stringResource(R.string.quantity, quantity))
+
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = {
                     if (quantity > 1) {
@@ -72,20 +76,20 @@ fun ProductDetailsScreen(
             }
             Row {
                 Button(onClick = { navController.navigate(Screen.UpdateProduct.createRoute(it.id)) }) {
-                    Text("Update")
+                    Text(stringResource(R.string.update))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = { navController.navigate(Screen.DeleteProduct.createRoute(it.id)) }) {
-                    Text("Delete")
+                    Text(stringResource(R.string.delete))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = {
                     navController.popBackStack()
                     viewModel.fetchProducts()
                 }) {
-                    Text("Back to List")
+                    Text(stringResource(R.string.back_to_list))
                 }
             }
         }
-    } ?: Text("Product not found")
+    } ?: Text(stringResource(R.string.product_not_found))
 }

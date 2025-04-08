@@ -18,9 +18,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.softmarket.R
 import com.example.softmarket.data.getBilling
 import com.example.softmarket.data.getCategory
 import com.example.softmarket.data.getPlatform
@@ -104,11 +106,11 @@ fun UpdateProductScreen(
                     viewModel.updateProduct(it.id, updatedProduct)
                     navController.popBackStack()
                 }) {
-                    Text("Update")
+                    Text(stringResource(R.string.update))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = { navController.popBackStack() }) {
-                    Text("Cancel")
+                    Text(stringResource(R.string.cancel))
                 }
             }
         }

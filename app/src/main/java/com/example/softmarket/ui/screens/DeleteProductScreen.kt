@@ -14,10 +14,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.softmarket.R
 import com.example.softmarket.ui.viewmodel.ProductViewModel
 
 @Composable
@@ -30,18 +32,18 @@ fun DeleteProductScreen(navController: NavController, productId: Int, viewModel:
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Are you sure you want to delete ${it.title}?",
+                text = stringResource(R.string.delete_confirmation, product.title),
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(16.dp))
             Row {
                 Button(onClick = { viewModel.deleteProduct(it.id); navController.popBackStack() }) {
-                    Text("Yes")
+                    Text(stringResource(R.string.yes))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = { navController.popBackStack() }) {
-                    Text("No")
+                    Text(stringResource(R.string.no))
                 }
             }
         }
