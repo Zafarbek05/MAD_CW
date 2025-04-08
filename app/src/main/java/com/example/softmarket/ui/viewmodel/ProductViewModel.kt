@@ -1,12 +1,12 @@
 package com.example.softmarket.ui.viewmodel
 
-import ProductRepository
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.softmarket.data.Product
-import com.example.softmarket.data.remote.ProductResponse
+import com.example.softmarket.data.remote.ProductRequest
+import com.example.softmarket.data.repository.ProductRepository
 import kotlinx.coroutines.launch
 
 class ProductViewModel : ViewModel() {
@@ -31,7 +31,7 @@ class ProductViewModel : ViewModel() {
         }
     }
 
-    fun createProduct(product: Product){
+    fun createProduct(product: ProductRequest){
         viewModelScope.launch {
             try {
                 repository.createProduct(product)

@@ -27,31 +27,34 @@ import com.example.softmarket.ui.viewmodel.ProductViewModel
 fun ProductDetailsScreen(
     navController: NavController,
     productId: Int,
-    viewModel: ProductViewModel
+    viewModel: ProductViewModel,
 ) {
-    val product = viewModel.products.find { it.id.toInt() == productId }
+    val product = viewModel.products.find { it.id == productId }
     product?.let {
-        Column(modifier = Modifier.padding(16.dp)) {
+        Column(
+            modifier = Modifier.padding(horizontal = 16.dp),
+        ) {
             Image(
                 painter = rememberAsyncImagePainter(model = it.logoUrl),
                 contentDescription = "Logo",
-                modifier = Modifier.size(120.dp),
+                modifier = Modifier.size(120.dp).padding(16.dp),
                 contentScale = ContentScale.Crop
             )
             Text("Title: ${it.title}")
             Text("Provider: ${it.provider}")
-            Text("Category: ${getCategory(it.category.toInt())}")
-            Text("Target Platform: ${getPlatform(it.targetPlatforms.toInt())}")
-            Text("Billing: ${getBilling(it.billing.toInt())}")
+            Text("Category: ${getCategory(it.category)}")
+            Text("Target Platform: ${getPlatform(it.targetPlatforms)}")
+            Text("Billing: ${getBilling(it.billing)}")
             Text("Price: ${it.price}$")
-            Text("Size: ${it.size} MB$")
-            Text("About: ${it.about} MB$")
+            Text("Size: ${it.size} MB")
+            Text("About: ${it.about}")
+            Text("Stock: ${it.quantity}")
             Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { if (it.quantity > 1) it.quantity-- }) {
                     Text("-")
                 }
                 Text(text = it.quantity.toString())
-                IconButton(onClick = { it.quantity }) {
+                IconButton(onClick = { it.quantity++ }) {
                     Text("+")
                 }
             }
@@ -62,6 +65,10 @@ fun ProductDetailsScreen(
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = { navController.navigate(Screen.DeleteProduct.createRoute(it.id)) }) {
                     Text("Delete")
+                }
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(onClick = { navController.popBackStack() }) {
+                    Text("Back to List")
                 }
             }
         }

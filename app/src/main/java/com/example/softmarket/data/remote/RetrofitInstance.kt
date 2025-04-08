@@ -1,7 +1,6 @@
 package com.example.softmarket.data.remote
 
 import ProductApi
-import com.google.gson.Gson
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 

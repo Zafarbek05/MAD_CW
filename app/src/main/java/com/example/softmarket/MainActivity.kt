@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -14,7 +13,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,6 +30,7 @@ import com.example.softmarket.ui.viewmodel.ProductViewModel
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,6 +40,16 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
             SoftmarketTheme {
                 Scaffold(
+                    topBar = {
+                        TopAppBar(
+                            title = { Text("SoftMarket")},
+                            actions = {
+                                IconButton(onClick = { navController.navigate(Screen.CreateProduct.route) }) {
+                                    Icon(Icons.Filled.Add, contentDescription = "Add Product")
+                                }
+                            }
+                        )
+                    },
                     modifier = Modifier.fillMaxSize(),
                     bottomBar = {
                         BottomNavigation {
@@ -61,9 +74,9 @@ class MainActivity : ComponentActivity() {
                 ) { innerPaddings ->
                     NavigationScreens(
                         navController, viewModel,
-                        modifier = Modifier
-                            .padding(innerPaddings)
-                            .fillMaxSize())
+                        paddingValues = innerPaddings,
+                        modifier = Modifier.fillMaxSize(),
+                        )
                     viewModel.toast.value?.let { message ->
                         scope.launch {
                             Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()

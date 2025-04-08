@@ -1,5 +1,7 @@
+package com.example.softmarket.data.repository
+
 import com.example.softmarket.data.Product
-import com.example.softmarket.data.remote.ProductResponse
+import com.example.softmarket.data.remote.ProductRequest
 import com.example.softmarket.data.remote.RetrofitInstance
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -11,6 +13,7 @@ class ProductRepository {
     suspend fun getProducts(): List<Product> = withContext(Dispatchers.IO) {
         api.getProducts(studentId).data.map { product: Product ->
             Product(
+                id = product.id,
                 title = product.title,
                 provider = product.provider,
                 category = product.category,
@@ -25,7 +28,7 @@ class ProductRepository {
         }
     }
 
-    suspend fun createProduct(product: Product): Product = withContext(Dispatchers.IO) {
+    suspend fun createProduct(product: ProductRequest): Product = withContext(Dispatchers.IO) {
         api.createProduct(studentId, product)
     }
 

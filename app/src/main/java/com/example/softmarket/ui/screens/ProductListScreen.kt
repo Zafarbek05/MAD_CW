@@ -1,9 +1,9 @@
 package com.example.softmarket.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -82,11 +82,13 @@ fun ProductCard(
 @Composable
 fun ProductListScreen(
     navController: NavController,
-    viewModel: ProductViewModel
+    viewModel: ProductViewModel,
+    paddingValues: PaddingValues
 ) {
     val products = viewModel.products
-    Log.d("Products:", "${products.size}")
-    LazyColumn(modifier = Modifier.fillMaxSize()) {
+    LazyColumn(modifier = Modifier
+        .fillMaxSize()
+        .padding(paddingValues)) {
         itemsIndexed(products, itemContent = { index, item ->
             ProductCard(
                 product = item,
@@ -100,7 +102,8 @@ fun ProductListScreen(
                     navController.navigate(Screen.UpdateProduct.createRoute(item.id))
                 },
                 onQuantityChange = { quantity ->
-                    item.quantity = quantity
+                    val updatedProduct = item.copy(quantity = quantity)
+                    products[index] = updatedProduct
                 })
         })
     }

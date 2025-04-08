@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class Product(
 
     @SerializedName("id")
-    val id: Int = 0,
+    val id: Int,
 
     @SerializedName("title")
     val title: String,
