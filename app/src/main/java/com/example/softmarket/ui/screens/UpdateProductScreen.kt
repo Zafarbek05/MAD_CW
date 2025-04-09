@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -84,11 +86,11 @@ fun UpdateProductScreen(
                 selected = billing.text,
                 onValueChange = { billing = TextFieldValue(it) }
             )
-            MyTextField(value = price, onValueChange = { price = it }, label = { Text("Price") })
+            MyTextField(value = price, onValueChange = { price = it }, label = { Text("Price") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
             MyTextField(value = logoUrl, onValueChange = { logoUrl = it }, label = { Text("Logo URL") })
-            MyTextField(value = size, onValueChange = { size = it }, label = { Text("Size") })
+            MyTextField(value = size, onValueChange = { size = it }, label = { Text("Size") }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
             MyTextField(value = about, onValueChange = { about = it }, label = { Text("About") })
-            MyTextField(value = quantity, onValueChange = {quantity = it}, label = { Text("Stock")})
+            MyTextField(value = quantity, onValueChange = {quantity = it}, label = { Text("Stock")}, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
             Row {
                 Button(onClick = {
                     val updatedProduct = it.copy(
